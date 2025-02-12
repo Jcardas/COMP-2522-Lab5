@@ -3,11 +3,11 @@ package ca.bcit.comp2522.lab4;
 /**
  * Represents a novel with a title, author, and year published.
  *
- * @author Ruan CHu
+ * @author Ruan Chu
  * @author Justin Cardas
  * @version 2025
  */
-class Novel
+public class Novel
 {
     static final int CURRENT_YEAR = 2025;
 
