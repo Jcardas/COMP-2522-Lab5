@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.lab4;
+package ca.bcit.comp2522.lab5;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +19,8 @@ public class BookStore
 
     private static final int DECADE_DIFFERENCE = 10;
     private static final int FIRST_NOVEL = 0;
+    private static final int PERCENT_CONSTANT = 100;
+    private static final int NOTHING = 0;
 
     private final String name;
     private final List<Novel> novels;
@@ -359,9 +361,10 @@ public class BookStore
         while (novelIterator.hasNext())
         {
 
-            System.out.println(novelMap.get(novelIterator.next()).getTitle()); // Print out the title of each Novel in the set
+            System.out.println(novelMap.get(novelIterator.next())); // Print out the title of each Novel in the set
             novelIterator.next();
         }
+        System.out.println();
 
         novelIterator = novelKeySet.iterator();
 
@@ -371,8 +374,8 @@ public class BookStore
             String key = novelIterator.next();
 
             if (novelMap.get(key).getTitle().toLowerCase().contains("the")) {
-                System.out.println("\n");
-                System.out.println(novelMap.get(key).getTitle());
+                System.out.println("Removed:");
+                System.out.println(novelMap.get(key));
                 novelIterator.remove(); // Remove the current entry safely
             }
         }
@@ -386,6 +389,7 @@ public class BookStore
 
         novelIterator = keyList.iterator();
 
+        System.out.println("\nSorted no \"the\"");
         while (novelIterator.hasNext())
         {
             System.out.println(novelMap.get(novelIterator.next()).toString()); // Print using toString() for formatting
@@ -600,7 +604,7 @@ public class BookStore
     {
         int result;
 
-        result = 0;
+        result = NOTHING;
 
 
         for (final Novel novel : novels)
@@ -630,7 +634,7 @@ public class BookStore
     {
         int result;
 
-        result = 0;
+        result = NOTHING;
 
 
         for (final Novel novel : novels)
@@ -641,7 +645,7 @@ public class BookStore
             }
         }
 
-        return (double) result / novels.size();
+        return (double) result / novels.size() * PERCENT_CONSTANT;
     }
 
     /**
@@ -697,7 +701,7 @@ public class BookStore
         final List<Novel> fifteenCharTitles;
 
         bookstore = new BookStore("Classic Novels Collection");
-        System.out.println("All Titles in UPPERCASE:");
+        System.out.println("\nAll Titles in UPPERCASE:");
         bookstore.printAllTitles();
         System.out.println("\nBook Titles Containing 'the':");
         bookstore.printBookTitle("the");

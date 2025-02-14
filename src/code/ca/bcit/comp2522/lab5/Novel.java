@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.lab4;
+package ca.bcit.comp2522.lab5;
 
 /**
  * Represents a novel with a title, author, and year published.
@@ -11,6 +11,10 @@ public class Novel
         implements Comparable<Novel>
 {
     static final int CURRENT_YEAR = 2025;
+
+    static final int EVEN_CASE = 0;
+    static final int GREATER_CASE = 1;
+    static final int LESSER_CASE = -1;
 
     private final String title;
     private final String authorName;
@@ -126,15 +130,15 @@ public class Novel
 
         if(title == null && givenTitle == null)
         {
-            return 0;
+            return EVEN_CASE;
         }
         else if(title == null && givenTitle != null)
         {
-            return -1;
+            return LESSER_CASE;
         }
         else if(title != null && givenTitle == null)
         {
-            return 1;
+            return GREATER_CASE;
         }
         else
         {
