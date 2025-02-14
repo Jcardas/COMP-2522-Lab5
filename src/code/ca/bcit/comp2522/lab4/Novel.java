@@ -8,6 +8,7 @@ package ca.bcit.comp2522.lab4;
  * @version 2025
  */
 public class Novel
+        implements Comparable<Novel>
 {
     static final int CURRENT_YEAR = 2025;
 
@@ -17,31 +18,49 @@ public class Novel
 
     /**
      * Constructs a novel.
-     * @param title the title of the book
-     * @param authorName the name of the author
+     *
+     * @param title         the title of the book
+     * @param authorName    the name of the author
      * @param yearPublished the year the book was published (not in the future)
      */
     Novel(final String title,
           final String authorName,
           final int yearPublished)
     {
-        validateTitle(title);
-        validateAuthorName(authorName);
         validateYearPublished(yearPublished);
 
-        this.title         = title;
-        this.authorName    = authorName;
+        this.title      = fixBlankTitle(title);
+        this.authorName = fixBlankAuthorName(authorName);
+        ;
         this.yearPublished = yearPublished;
     }
 
-    private static void validateTitle(final String title)
+    /*
+     * Turns a title caught by .isBlank() into a null value
+     * @param title the title to check
+     * @return the original or null title
+     */
+    private static String fixBlankTitle(final String title)
     {
-        //Does this even need validation? (untitled books)
+        if(title != null && title.isBlank())
+        {
+            return null;
+        }
+        return title;
     }
 
-    private static void validateAuthorName(final String authorName)
+    /*
+     * Turns an author name caught by .isBlank() into a null value
+     * @param author name the author name to check
+     * @return the original or null author name
+     */
+    private static String fixBlankAuthorName(final String authorName)
     {
-        //Does this need validation? (Anon authors)
+        if(authorName != null && authorName.isBlank())
+        {
+            return null;
+        }
+        return authorName;
     }
 
     /*
@@ -61,7 +80,8 @@ public class Novel
      *
      * @return the title of the book as a String.
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
@@ -70,7 +90,8 @@ public class Novel
      *
      * @return the author's name as a String.
      */
-    public String getAuthorName() {
+    public String getAuthorName()
+    {
         return authorName;
     }
 
@@ -79,7 +100,67 @@ public class Novel
      *
      * @return the year the book was published as an integer.
      */
-    public int getYearPublished() {
+    public int getYearPublished()
+    {
         return yearPublished;
+    }
+
+    /**
+     * Compares the given Novel title to the calling Novel
+     * title based off of the String class's implementation of comparable.
+     * Books with null titles are always considered lower.
+     *
+     * @param givenNovel the Novel to be compared to.
+     * @return
+     */
+    @Override
+    public int compareTo(final Novel givenNovel)
+    {
+        if (givenNovel == null)
+        {
+            throw new IllegalArgumentException("Given Novel is null");
+        }
+
+        String givenTitle;
+        givenTitle = givenNovel.getTitle();
+
+        if(title == null && givenTitle == null)
+        {
+            return 0;
+        }
+        else if(title == null && givenTitle != null)
+        {
+            return -1;
+        }
+        else if(title != null && givenTitle == null)
+        {
+            return 1;
+        }
+        else
+        {
+            return title.compareTo(givenTitle);
+        }
+    }
+
+    /**
+     * Returns a string representation of a novel, with its title, author, and publishing year.
+     * @return a string representation of the Novel
+     */
+    @Override
+    public String toString()
+    {
+        StringBuilder details;
+        details = new StringBuilder();
+
+        details.append("\"");
+        details.append(title);
+        details.append("\"");
+        details.append(" by ");
+        details.append(authorName);
+        details.append(" (");
+        details.append(yearPublished);
+        details.append(")");
+
+        return details.toString();
     }
 }
