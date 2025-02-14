@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.Iterator;
 
@@ -340,7 +341,7 @@ public class BookStore
                 1966));
 
 
-        HashMap<String, Novel> novelMap;
+        Map<String, Novel> novelMap;
         novelMap = new HashMap<String, Novel>();
 
         for (Novel novel : novels)
@@ -352,48 +353,49 @@ public class BookStore
             }
         }
 
-        Set<String> novelKeySet;
+        final Set<String> novelKeySet;
         novelKeySet = novelMap.keySet();
 
-        Iterator<String> novelIterator;
+        final Iterator<String> novelIterator;
         novelIterator = novelKeySet.iterator();
 
+        //Print out all titles with hash map
         while (novelIterator.hasNext())
         {
-
-            System.out.println(novelMap.get(novelIterator.next())); // Print out the title of each Novel in the set
-            novelIterator.next();
+            final String key;
+            key = novelIterator.next();
+            System.out.println(novelMap.get(key));
         }
         System.out.println();
 
-        novelIterator = novelKeySet.iterator();
 
-        while (novelIterator.hasNext())
+        final Iterator<String> novelRemovalIterator;
+        novelRemovalIterator = novelKeySet.iterator();
+
+        //Remove all "the"
+        while (novelRemovalIterator.hasNext())
         {
-
-            String key = novelIterator.next();
+            final String key;
+            key = novelRemovalIterator.next();
 
             if (novelMap.get(key).getTitle().toLowerCase().contains("the")) {
                 System.out.println("Removed:");
                 System.out.println(novelMap.get(key));
-                novelIterator.remove(); // Remove the current entry safely
+                novelRemovalIterator.remove(); // Remove the current entry safely
             }
         }
 
 
         // Converting to list & sorting
-        List<String> keyList;
-        keyList = new ArrayList<>(novelKeySet);
+        final List<String> keyList;
+        keyList = new ArrayList<String>(novelKeySet);
 
-        Collections.sort(keyList); // Sort the List
-
-        novelIterator = keyList.iterator();
+        Collections.sort(keyList);
 
         System.out.println("\nSorted no \"the\"");
-        while (novelIterator.hasNext())
+        for (final String key : keyList)
         {
-            System.out.println(novelMap.get(novelIterator.next()).toString()); // Print using toString() for formatting
-            novelIterator.next();
+            System.out.println(novelMap.get(key));
         }
 
     }
@@ -482,7 +484,7 @@ public class BookStore
             System.out.println("No novels found");
         } else
         {
-            ArrayList<Novel> sortedNovelArray;
+            final List<Novel> sortedNovelArray;
             sortedNovelArray = new ArrayList<Novel>();
 
 
@@ -516,7 +518,7 @@ public class BookStore
             System.out.println("No novels found");
         } else
         {
-            List<Novel> decadeNovels = new ArrayList<>();
+            final List<Novel> decadeNovels = new ArrayList<>();
 
             for (final Novel novel : novels)
             {
@@ -676,9 +678,9 @@ public class BookStore
      * @param titleLength the title length to check for
      * @return a list of novel with titles of the specified length
      */
-    public List getBooksThisLength(int titleLength)
+    public List<Novel> getBooksThisLength(int titleLength)
     {
-        ArrayList<Novel> booksThisLength;
+        final List<Novel> booksThisLength;
         booksThisLength = new ArrayList<>();
 
         for (final Novel novel : novels)
